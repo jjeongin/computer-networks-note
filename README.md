@@ -1,5 +1,12 @@
 # Computer Networks Notes
-## Ch 1
+* [Chapter 1. Overview: Comp Networks and the Internet](#ch-1-comp-networks-and-the-internet)
+* [Chapter 2. Application Layer](#ch-2-application-layer)
+* [Chapter 3. Transport Layer](#ch-3-transport-layer)
+* [Chapter 4. Network Layer - Data Plane](#ch-4-network-layer-data-plane)
+* [Chapter 5. Network Layer - Control Plane](#ch-5-network-layer-control-plane)
+* [Chapter 6. Link Layer & LANs](#ch-6-link-layer)
+
+## Ch 1. Comp Networks and the Internet
 ### 1.5 Protocol Layers and Their Service Models
 * OSI Model (= Protocol Stack)
 
@@ -60,5 +67,5 @@
 
 ## Ch 5. Network Layer: Control Plane
 
-## Ch 6. Link Layer (& LANs)
+## Ch 6. Link Layer
 
