@@ -18,6 +18,8 @@
 | Link  |
 | Physical  |
 
+* OSI Model vs TCP/IP Model
+
 * Application Layer: where network applications and their applicaiton-layer protocols reside
   * Messages (= packes of information)
   * Distributed over multiple end systems, with the app in one end system using the protocol to exchange a message with the app in another end system.
@@ -85,26 +87,88 @@
   * Non-persistent connection: Sends each request/response pair over a seperate TCP connection. TCP connection is closed after the server sends the object. 
     * RTT (Round-trip time): Time it takes for a small packet to travel from client, server, then back to client
     * How HTTP uses TCP: "three-way handshake" The client sends a small TCP segment to the server, and the server also responds with a small TCP to check the connection. (1 RTT) => Total 2 RTT + transmission time 
- * Persistent connection: Sends all request/response pairs over the same TCP connection. The server leaves the connection open for further requests and makes it expire after certain time period.
-   * HTTP/1.1 uses persistent connection + pipelining to avoid time delay. Pipelining is allowing requests to be back-to-back w/o waiting for replies to pending requests.
+  * Persistent connection: Sends all request/response pairs over the same TCP connection. The server leaves the connection open for further requests and makes it expire after certain time period.
+    * HTTP/1.1 uses persistent connection + pipelining to avoid time delay. Pipelining is allowing requests to be back-to-back w/o waiting for replies to pending requests.
   * HTTP Message Request Format
-<img width="327" alt="Screen Shot 2023-02-02 at 2 15 51 AM" src="https://user-images.githubusercontent.com/68997923/216175955-909dc752-d1ab-4b95-8434-e4adad3ae989.png">
+    * <img width="327" alt="Screen Shot 2023-02-02 at 2 15 51 AM" src="https://user-images.githubusercontent.com/68997923/216175955-909dc752-d1ab-4b95-8434-e4adad3ae989.png">
+  
   * HTTP Message Response Format
+    * 
+
   * Cookies: Allows sites to keep track of users. Used to create a user session layer on top of stateless HTTP.
+    * 4 components: (1) cookie header in request message, (2) cookie header in response message, (3) cookie file kept on the user's end system (managed by the user's browser), (4) a back-end database at the server
+    * <img width="584" alt="Screen Shot 2023-02-02 at 10 30 19 PM" src="https://user-images.githubusercontent.com/68997923/216416699-35998e1d-6739-488b-9e4e-292610366e2e.png">
+    * Web server can access all the pages the user visited at the specific site in the past by cookie, thereby allowing one-click shopping w/o entering their info again at their subsequent visit.
   * Web Cache (= Proxy Server): A network entity that satisfies HTTP requests on the behalf of an origin Web server. Has its own disk storage and keeps copies of recently requested objects.
-    * CDNs (Content Distribution Networks): 
+    * <img width="541" alt="Screen Shot 2023-02-02 at 10 35 27 PM" src="https://user-images.githubusercontent.com/68997923/216418605-f49b292a-5fcf-44c1-b612-2a8b87087828.png">
+    * Cache is both a server and a client at the same time.
+    * Advantages: (1) Reduce the response time for a client request (esp. if the bandwith between client-server is much less than client-cache), (2) Reduce traffic on an institution's access link to the Internet (Reduce costs)
+    * CDNs (Content Distribution Networks): A CDN company installs many geographically distributed caches throughout the Internet, thereby localizing much of the traffic.
+      * Shared CDN (e.g. Akamai, Limelight) & Dedicated CDN (e.g. Google, Netflix)
+  * Conditional GET: A type of HTTP request message. A request message is conditional GET message if it uses GET method and the request message includes an If-Modified-Since: header line.
+    * A problem of caching: The copy of an object residing in the cache may be out-of-date (the original object may be modified after the copy was cached).
+    * Process:
+    * Caching
+      * Client -> Proxy Server: HTTP GET request
+      * Proxy Server -> Server: HTTP GET request
+      * Proxy Server <- Server: HTTP GET response with the object
+      * Client <- Proxy Server: HTTP GET response with the object, Proxy Server caches the object locally with the last-modified date.
+    * Conditional GET
+      * Client -> Proxy Server: HTTP GET request
+      * Proxy Server -> Server: HTTP Conditional GET request with a 'If-modified-since: DATE-TIME' header line. This is the same date & time with the last-modified date.
+      * Proxy Server <- Server: If the object has not been modified, response with HTTP/1.1 304 Not Modified response line.
+      * Client <- Proxy Server: HTTP GET response with the existing cached object 
+  * HTTP/2: Reduce latency by enabling request and response _multiplexing_ over a single TCP connection. 
+    * HOL (Head of Line) Blocking problem:  
+    * HTTP/2 Framing: 
+    * 
 
 ### 2.3 SMTP (E-mail in the Internet)
 
 ### 2.4 DNS
+* Directory system that translates hostnames to IP addresses. 
+* (1) A distributed database implemented in a hierarchy of DNS servers, (2) An application-layer protocol that allows hosts to query the distributed database.
+* DNS protocol runs over UDP and uses port 53. 
+* 
 
 ### 2.5 FTP (Peer-to-peer File Distribution)
 
 ## Ch 3. Transport Layer
+### 3.2 Multiplexing and Demultiplexing
+
+### 3.3 UDP
+
+### 3.5 TCP
+
+### 3.6 & 7 Congestion Control
 
 ## Ch 4. Network Layer: Data Plane
+### 4.2 Router
+* Switching
+* Packet Scheduling
+
+## 4.4 Generalized Forwarding and SDN
 
 ## Ch 5. Network Layer: Control Plane
+### 5.3 OSPF
+
+### 5.4 BGP
+
+### 5.5 SDN
+
+### 5.6 ICMP
 
 ## Ch 6. Link Layer
+* ARP vs PARP
+
+* VLANs
+
+* DHCP
+
+## Ch 8. Security
+### 8.6 TLS
+
+### 8.7 IPsec
+
+### 8.9 Firewalls
 
