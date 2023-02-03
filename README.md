@@ -12,7 +12,7 @@
 
 | OSI Model |
 | ------------- |
-| Application  |
+| Application  | (Session, Presentation)
 | Transport  |
 | Network  |
 | Link  |
@@ -21,7 +21,7 @@
 * OSI Model vs TCP/IP Model
 
 * Application Layer: where network applications and their applicaiton-layer protocols reside
-  * Messages (= packes of information)
+  * Messages (= packets a.k.a. Protocol Data Unit in application layer)
   * Distributed over multiple end systems, with the app in one end system using the protocol to exchange a message with the app in another end system.
   * Protocols:
     * HTTP: Web document request & transfer
@@ -84,7 +84,7 @@
   * Web Browser = Client since client-side HTTP is implemented in browser.
   * User requests a web page -> browser sends HTTP request message to the server -> server receives the message and responds with HTTP response message (which contains the objects)
   * Stateless Protocol: The server doesn't store any state information about the client and merely sends the object that they asked for. 
-  * Non-persistent connection: Sends each request/response pair over a seperate TCP connection. TCP connection is closed after the server sends the object. 
+  * HTTP/1.0 Non-persistent connection: Sends each request/response pair over a seperate TCP connection. TCP connection is closed after the server sends the object. 
     * RTT (Round-trip time): Time it takes for a small packet to travel from client, server, then back to client
     * How HTTP uses TCP: "three-way handshake" The client sends a small TCP segment to the server, and the server also responds with a small TCP to check the connection. (1 RTT) => Total 2 RTT + transmission time 
   * Persistent connection: Sends all request/response pairs over the same TCP connection. The server leaves the connection open for further requests and makes it expire after certain time period.
@@ -103,21 +103,21 @@
     * <img width="541" alt="Screen Shot 2023-02-02 at 10 35 27 PM" src="https://user-images.githubusercontent.com/68997923/216418605-f49b292a-5fcf-44c1-b612-2a8b87087828.png">
     * Cache is both a server and a client at the same time.
     * Advantages: (1) Reduce the response time for a client request (esp. if the bandwith between client-server is much less than client-cache), (2) Reduce traffic on an institution's access link to the Internet (Reduce costs)
+    * A problem of caching: The copy of an object residing in the cache may be out-of-date (the original object may be modified after the copy was cached). => Conditional GET
+    * Conditional GET: A type of HTTP request message. A request message is conditional GET message if it uses GET method and the request message includes an 'If-Modified-Since:' header line.
+      * Process:
+        * Caching
+          * Client -> Proxy Server: HTTP GET request
+          * Proxy Server -> Server: HTTP GET request
+          * Proxy Server <- Server: HTTP GET response with the object
+          * Client <- Proxy Server: HTTP GET response with the object, Proxy Server caches the object locally with the last-modified date.
+        * Conditional GET
+          * Client -> Proxy Server: HTTP GET request
+          * Proxy Server -> Server: HTTP Conditional GET request with a 'If-modified-since: DATE-TIME' header line. This is the same date & time with the last-modified date.
+          * Proxy Server <- Server: If the object has not been modified, response with HTTP/1.1 304 Not Modified response line.
+          * Client <- Proxy Server: HTTP GET response with the existing cached object 
     * CDNs (Content Distribution Networks): A CDN company installs many geographically distributed caches throughout the Internet, thereby localizing much of the traffic.
-      * Shared CDN (e.g. Akamai, Limelight) & Dedicated CDN (e.g. Google, Netflix)
-  * Conditional GET: A type of HTTP request message. A request message is conditional GET message if it uses GET method and the request message includes an If-Modified-Since: header line.
-    * A problem of caching: The copy of an object residing in the cache may be out-of-date (the original object may be modified after the copy was cached).
-    * Process:
-    * Caching
-      * Client -> Proxy Server: HTTP GET request
-      * Proxy Server -> Server: HTTP GET request
-      * Proxy Server <- Server: HTTP GET response with the object
-      * Client <- Proxy Server: HTTP GET response with the object, Proxy Server caches the object locally with the last-modified date.
-    * Conditional GET
-      * Client -> Proxy Server: HTTP GET request
-      * Proxy Server -> Server: HTTP Conditional GET request with a 'If-modified-since: DATE-TIME' header line. This is the same date & time with the last-modified date.
-      * Proxy Server <- Server: If the object has not been modified, response with HTTP/1.1 304 Not Modified response line.
-      * Client <- Proxy Server: HTTP GET response with the existing cached object 
+      * Shared CDN (e.g. Akamai, Limelight) vs Dedicated CDN (e.g. Google, Netflix)
   * HTTP/2: Reduce latency by enabling request and response _multiplexing_ over a single TCP connection. 
     * HOL (Head of Line) Blocking problem:  
     * HTTP/2 Framing: 
@@ -172,3 +172,5 @@
 
 ### 8.9 Firewalls
 
+## Notes by Concepts
+* traceroute: gives us the complete network devices list in between with their IP addresses
