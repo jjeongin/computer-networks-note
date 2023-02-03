@@ -8,17 +8,19 @@
 
 ## Ch 1. Comp Networks and the Internet
 ### 1.5 Protocol Layers and Their Service Models
-* OSI Model (= Protocol Stack)
+* OSI Model vs TCP/IP Model (Protocol Stack)
 
-| OSI Model |
-| ------------- |
-| Application  | (Session, Presentation)
-| Transport  |
-| Network  |
-| Link  |
-| Physical  |
+| OSI Model | TCP/IP Model |
+| ------------- | ------------- |
+| Application  | Application  |
+| Presentation  | |
+| Session  | |
+| Transport | Transport |
+| Network  | Network  |
+| Link | Link |
+| Physical | Physical |
 
-* OSI Model vs TCP/IP Model
+<img width="798" alt="Screen Shot 2023-02-03 at 4 38 35 PM" src="https://user-images.githubusercontent.com/68997923/216605651-37724708-9349-4b2d-817d-3d9e97e8eee3.png">
 
 * Application Layer: where network applications and their applicaiton-layer protocols reside
   * Messages (= packets a.k.a. Protocol Data Unit in application layer)
@@ -174,3 +176,11 @@
 
 ## Notes by Concepts
 * traceroute: gives us the complete network devices list in between with their IP addresses
+
+## Linux Commands
+* ping: sends an echo to a hostname or an IP addess
+* chmod: changes the access permissions and the special mode flags of file system object. 
+* cat: lists, combines, and writes file content to the standard output
+* touch: create an empty file or generate and modify a timestamp in the Linux command line
+* traceroute: finds hop to rreach to perticular host
+* ifconfig: 
