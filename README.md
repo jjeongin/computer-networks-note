@@ -208,14 +208,31 @@
     * REJECT: “rejects” the packet. If TCP, it sends a “connection reset” packet. If UDP or ICMP, it sends a “destination host unreachable” packet.
     * QUEUE: passes the packet to userspace.
     * RETURN: stops traversing this chain and resumes at the next rule in the previous (calling) chain.
-    * 
-* traceroute: gives us the complete network devices list in between with their IP addresses
+* Default Gateway: Forwards the packets from the client to other network when there is no routing information about the destination i.e. host (or router) does not know where the destination is present.  
+  * When the source wants to reach a destination which is outside its network, the source uses the default gateway to forward the data and locate the destination’s network so that data should reach its intended destination.
+* ARP: When one host wants to send something to another host then it will check if the destination is inside or outside its own network. When the destination is in the same network then it will use ARP to find the MAC address of the destination and it can send the IP packet.
+  * How to check if the destination is in the same network? Use Subnet.
+* 
 
 ## Linux Commands
 * ping: sends an echo to a hostname or an IP addess
 * chmod: changes the access permissions and the special mode flags of file system object. 
 * cat: lists, combines, and writes file content to the standard output
 * touch: create an empty file or generate and modify a timestamp in the Linux command line
-* traceroute: finds hop to rreach to perticular host
+* traceroute: gives us the complete network devices list in between with their IP addresses
 * ifconfig: 
+* chmod (change mode): to change the access permissions and the special mode flags of file system objects
+  * `chmod [permissions] [filename]`: 
+    * Symbolic mode: '-rw-rw-r--'
+      * - is file, d is directory (1st char)
+      * r is read, w is write, x is execute
+      * u is user, g is group, o is other
+      * + to add, - to remove, = to assign permissions
+      * e.g. `chmod u+x mymotd.sh` adds execute permission of the file to the user.
+    * Absolute mode: read is 4, write is 2, execute is 1
+      * e.g. `chmod 664 mymotd.sh` is rw for user, rw for group, r for other.
+* chown (change owner): to change ownership from one user to another
+  * `chown [user_name] [filename]`: changes ownership of the file to the new user
+  * `chown -R [user_name] [dir_name]`: ,, of directory to the new user
+  * `chown [user_name]:[group_name] [filename]`: changes ownership of the file to the new user and the group simultaneously
 
