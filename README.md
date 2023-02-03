@@ -145,11 +145,22 @@
 ### 3.6 & 7 Congestion Control
 
 ## Ch 4. Network Layer: Data Plane
+## 4.1 Overview
+* Routing & Forwarding
+  * Routing with routing table
 ### 4.2 Router
 * Switching
 * Packet Scheduling
 
-## 4.4 Generalized Forwarding and SDN
+### 4.3 IP (Internet Protocol)
+* IPv4 Datagram Format
+<img width="483" alt="Screen Shot 2023-02-03 at 11 08 43 PM" src="https://user-images.githubusercontent.com/68997923/216686824-e3f06c1d-361f-4d9f-b2fa-bdcd2d397ca3.png">
+* IP Address: Each byte of the address is written in its decimal form and seperated by a dot from other bytes.
+* Subnet: A network interconnecting multiple host interfaces and a router interface. A subnet is assigned a chucnk of IP addresses with the same prefix, e.g. 223.1.1.0/24, where /24 is a subnet mask which indicates the leftmost 24 bits of the 32-bit quantity define the subnet address.
+* IP Broadcast Address: 255.255.255.255. When a host sends a datagram to the broadcast address, the message will be delivered to all hosts on the same subnet.
+* Obtaining a block of addresses for subnet -> contact ISP. Assigning this block of addresses to individual hosts -> DHCP.
+* NAT (Network Address Translation)
+  * Private network: A network whose addresses only have meaning to devices within that network.
 
 ## Ch 5. Network Layer: Control Plane
 ### 5.3 OSPF
@@ -173,8 +184,31 @@
 ### 8.7 IPsec
 
 ### 8.9 Firewalls
-
+* Firewall decides the fate of packets going in and out of the system.
 ## Notes by Concepts
+* Iptable: A standard firewall included in most Linux distributions by default. A command-line interface to talk to the kernel (kernel-level netfilter hooks) and decides the packets to filter. It is used to set up, maintain, and inspect the tables of IP packet filter rules in the Linux kernel.
+  * A type of a routing table?
+  * _Tables_: A set of chains
+  * _Chain_: A collection of rules
+  * _Rule_ : A condition used to match packet
+  * _Target_: An action taken when a possible rule matches. e.g. ACCEPT, DROP, QUEUE
+  * _Policy_: The default action taken in case of no match with the inbuilt chains. e.g. ACCEPT or DROP
+  * Iptable Main Files
+    * /etc/init.d/iptables – init script to start|stop|restart and save rulesets
+    * /etc/sysconfig/iptables – where rulesets are saved. Iptable rules reset everytime the system reboots so we want to save the rulesets in this file so that it restores
+    * /sbin/iptables – binary
+  * Iptable Packet Chain
+    * INPUT: Default chain originating to system.
+    * OUTPUT: Default chain generating from system.
+    * FORWARD: Default chain packets are send through another interface.
+    * RH-Firewall-1-INPUT: User-defined
+  * Iptable Actions
+    * ACCEPT: accepts the packet.
+    * DROP: drops the packet. To anyone trying to connect to your system, it would appear like the system didn’t even exist.
+    * REJECT: “rejects” the packet. If TCP, it sends a “connection reset” packet. If UDP or ICMP, it sends a “destination host unreachable” packet.
+    * QUEUE: passes the packet to userspace.
+    * RETURN: stops traversing this chain and resumes at the next rule in the previous (calling) chain.
+    * 
 * traceroute: gives us the complete network devices list in between with their IP addresses
 
 ## Linux Commands
@@ -184,3 +218,4 @@
 * touch: create an empty file or generate and modify a timestamp in the Linux command line
 * traceroute: finds hop to rreach to perticular host
 * ifconfig: 
+
