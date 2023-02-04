@@ -17,19 +17,61 @@
 | Session  | |
 | Transport | Transport |
 | Network  | Network  |
-| Link | Link |
+| Link (data, control) | Link (data, control) |
 | Physical | Physical |
 
 <img width="798" alt="Screen Shot 2023-02-03 at 4 38 35 PM" src="https://user-images.githubusercontent.com/68997923/216605651-37724708-9349-4b2d-817d-3d9e97e8eee3.png">
 
+#### Different Protocols at Each Layer
+![image](https://user-images.githubusercontent.com/68997923/216702912-7f85da8a-6c49-4245-b61f-ddfc554350df.png)
+![image](https://user-images.githubusercontent.com/68997923/216703050-a869c06a-aebf-4fef-8db2-e6715e5eab76.png)
+
+#### OSI Model Explained (source: https://www.geeksforgeeks.org/layers-of-osi-model/)
+OSI: Open Systems Interconnection
+* Application Layer (Layer 7)
+  * 
+* Presentation Layer (Layer 6): Translation layer, application layer is extracted here and manipulated as per the required format to transmit over the network. 
+* Session Layer (Layer 5): the establishment of connection, maintenance of sessions, authentication, and also ensures security
+
+-- Software Layer --
+
+* Transport Layer (Layer 4)
+
+-- Harware Layer --
+
+* Network Layer (Layer 3) 
+* Link Layer (2) 
+  * Transmit a packet to the host using MAC address. 
+  * PDU: Frame / Devices: 
+  * 
+* Physical Layer (1) 
+  * Actual physical connection between the devices. Transmits individual bits from one node to the next. (Data Link layer will later frame it.)
+  * PDU: Bits / Devices: Hub, Modem, Repeater, Cable
+  * Functions
+    * Bit synchronization
+    * Bit rate control
+    * Physical topologies
+    * Transmission mode
+
+
+#### From Textbook
 * Application Layer: where network applications and their applicaiton-layer protocols reside
   * Messages (= packets a.k.a. Protocol Data Unit in application layer)
   * Distributed over multiple end systems, with the app in one end system using the protocol to exchange a message with the app in another end system.
   * Protocols:
     * HTTP: Web document request & transfer
-    * SMTP: E-mail transfer
+      * TCP, port 80
+      * HTTPS: secure, encrypted HTTPS
+        * TCP, port 443
+    * SMTP: E-mail transfer. A push protocol and is used to send the mail. The SMTP server is an always-on listening mode.
+      * TCP, port 25
     * FTP: File transfer
+      * TCP, port 20/21
     * DNS (doman name system): Translation of human-friendly names e.g. www.google.com to a 32-bit network addess (IP address)
+    * DHCP (dynamic host configuration protocol): to dynamically assing IP addresses (a bulk of IP addresses in the subnet)
+      * UDP, port 68 (client) & 67 (server)
+    * SNMP (simple network management protocol): monitor network, detect network faults and sometimes even used to configure remote devices.
+      * UDP, port 161/162
 * Transport Layer
   * Segment (= packets in transport layer)
   * Transport layer protocols transport application-layer messages.
@@ -141,8 +183,10 @@
 ### 3.3 UDP
 
 ### 3.5 TCP
+* TCP Flow Control: Flow control deals with the amount of data sent to the receiver side without receiving any acknowledgment. It makes sure that the receiver will not be overwhelmed with data.
 
 ### 3.6 & 7 Congestion Control
+* Controls the entry of data packets into the network, enabling a better use of a shared network infrastructure and avoiding congestive collapse. 
 
 ## Ch 4. Network Layer: Data Plane
 ## 4.1 Overview
@@ -209,19 +253,28 @@
     * QUEUE: passes the packet to userspace.
     * RETURN: stops traversing this chain and resumes at the next rule in the previous (calling) chain.
 * Default Gateway: Forwards the packets from the client to other network when there is no routing information about the destination i.e. host (or router) does not know where the destination is present.  
+  * Gateway: A passage to connect two networks that may work upon different networking models. Gateways are also called protocol converters and can operate at any network layer.
   * When the source wants to reach a destination which is outside its network, the source uses the default gateway to forward the data and locate the destination’s network so that data should reach its intended destination.
 * ARP: When one host wants to send something to another host then it will check if the destination is inside or outside its own network. When the destination is in the same network then it will use ARP to find the MAC address of the destination and it can send the IP packet.
   * How to check if the destination is in the same network? Use Subnet.
-* 
+* Ping flood: A denial-of-service attack in which the attacker attempts to overwhelm a targeted device with ICMP echo-request packets.
+* Ping storm: An act of using a ping program to send many ICMP echo request packets to a destination host.
+* Hub vs Router vs Switch
+   * Hub: A connector that connects the wires coming from different sides. An electronical device that only operates on Physical layer (Layer 1). A hub works on basis of broadcasting.
+   * Switch: A point to point communication device that operates on a Data Link layer (Layer 2). A switch works on basis of MAC address.
+   * Router: A router is more sophisticated and intelligent device as it can read IP address and direct the packets to another network with specified IP address. It operates on Network layer (Layer 3). A router works on basis of IP address.
+   * <img width="331" alt="Screen Shot 2023-02-04 at 12 29 23 AM" src="https://user-images.githubusercontent.com/68997923/216704512-918f518e-4023-4651-ba73-eae93d3c0367.png">
+* SSH: 
+  * 
 
 ## Linux Commands
-* ping: sends an echo to a hostname or an IP addess
-* chmod: changes the access permissions and the special mode flags of file system object. 
-* cat: lists, combines, and writes file content to the standard output
-* touch: create an empty file or generate and modify a timestamp in the Linux command line
-* traceroute: gives us the complete network devices list in between with their IP addresses
-* ifconfig: 
-* chmod (change mode): to change the access permissions and the special mode flags of file system objects
+* **ping**: sends an echo to a hostname or an IP addess
+* **traceroute**: gives us the complete network devices list in between with their IP addresses
+* **cat**: lists, combines, and writes file content to the standard output
+* **touch**: create an empty file or generate and modify a timestamp in the Linux command line
+  * 
+* **ifconfig**: 
+* **chmod (change mode)**: to change the access permissions and the special mode flags of file system objects
   * `chmod [permissions] [filename]`: 
     * Symbolic mode: '-rw-rw-r--'
       * - is file, d is directory (1st char)
@@ -231,7 +284,7 @@
       * e.g. `chmod u+x mymotd.sh` adds execute permission of the file to the user.
     * Absolute mode: read is 4, write is 2, execute is 1
       * e.g. `chmod 664 mymotd.sh` is rw for user, rw for group, r for other.
-* chown (change owner): to change ownership from one user to another
+* **chown (change owner)**: to change ownership from one user to another
   * `chown [user_name] [filename]`: changes ownership of the file to the new user
   * `chown -R [user_name] [dir_name]`: ,, of directory to the new user
   * `chown [user_name]:[group_name] [filename]`: changes ownership of the file to the new user and the group simultaneously
